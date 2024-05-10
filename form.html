@@ -1,0 +1,43 @@
+</html><!DOCTYPE html>
+<html>
+    <head>
+        <title>Registration Form </title>
+        <style>
+            .center {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             color:  #3B9EBF;
+             }
+        </style>
+    </head>
+    <body bgcolor="#ADD8E6">
+        <h1>Registration  Form<h1>
+        <div style="width: 300px; margin: 0 auto;padding: 20px; border: 5px solid #000; border-radius: 10px; background-color: #6FC0DB">
+            <form action="data.php" method="POST" >
+                <label for='fname'>First name:</label>
+                <input type="text" id="fname" name="fname" placeholder="Your first name">
+                <br>
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lname" placeholder="Your last name">
+                <br>
+                <label for="email">E-mail:</label><br>
+                <input type="text" id="email" name="email" placeholder="Your E-mail">
+                <br>
+                <label for="ph_number">Phone Number:</label>
+                <input type="Number" id="ph_number" name="ph_number" placeholder="Your Phone Number">
+                <br>
+                <label for="dob">Date of Birth:</label>
+                <input type="Date" id="dob" name="dob">
+                <br>
+                <label for="bio">Biography:</label>
+                <textarea rows="9" cols="30" name="bio" id="bio"> Write here.... </textarea>
+                <br>
+                <br>
+                <div class="center">
+                <input type="submit" id="submit" name="Submit">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
