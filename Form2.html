@@ -17,42 +17,39 @@
 
     <?php
     session_start();
-    $fnameValue = isset($_SESSION['fname']) ? $_SESSION['fname'] : '';
-    $lnameValue = isset($_SESSION['lname']) ? $_SESSION['lname'] : '';
-    $emailValue = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-    $phNumberValue = isset($_SESSION['ph_number']) ? $_SESSION['ph_number'] : '';
-    $dobValue = isset($_SESSION['dob']) ? $_SESSION['dob'] : '';
-    $bioValue = isset($_SESSION['bio']) ? $_SESSION['bio'] : '';
-    
+    if (isset($_SESSION['success'])) {
+        echo "<p style='color: green;'>".$_SESSION['success']."</p>";
+        unset($_SESSION['success']); // Clear success message after displaying
+    }
     if (isset($_SESSION['errors'])) {
         $errors = $_SESSION['errors'];
         foreach ($errors as $error) {
-            echo "<p style='color: red;'>$error</p>";
+            echo "<p class='error'>$error</p>";
         }
-        unset($_SESSION['errors']);
+        unset($_SESSION['errors']); // Clear errors after displaying
     }
     ?>
 
     <form action="process_form.php" method="POST">
         <div>
             <label for="fname">First Name:</label><br>
-            <input type="text" id="fname" name="fname" value="<?php echo htmlspecialchars($fnameValue); ?>"><br>
-            <?php if (isset($errors['fname'])): ?>
-                <span class="error"><?php echo $errors['fname']; ?></span>
+            <input type="text" id="fname" name="fname" value="<?php echo isset($_SESSION['fname']) ? htmlspecialchars($_SESSION['fname']) : ''; ?>"><br>
+            <?php if (isset($errors['name'])): ?>
+                <span class="error"><?php echo $errors['name']; ?></span>
             <?php endif; ?>
         </div>
 
         <div>
             <label for="lname">Last Name:</label><br>
-            <input type="text" id="lname" name="lname" value="<?php echo htmlspecialchars($lnameValue); ?>"><br>
-            <?php if (isset($errors['lname'])): ?>
-                <span class="error"><?php echo $errors['lname']; ?></span>
+            <input type="text" id="lname" name="lname" value="<?php echo isset($_SESSION['lname']) ? htmlspecialchars($_SESSION['lname']) : ''; ?>"><br>
+            <?php if (isset($errors['name'])): ?>
+                <span class="error"><?php echo $errors['name']; ?></span>
             <?php endif; ?>
         </div>
 
         <div>
             <label for="email">Email Address:</label><br>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($emailValue); ?>"><br>
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : ''; ?>"><br>
             <?php if (isset($errors['email'])): ?>
                 <span class="error"><?php echo $errors['email']; ?></span>
             <?php endif; ?>
@@ -60,7 +57,7 @@
 
         <div>
             <label for="ph_number">Phone Number:</label><br>
-            <input type="tel" id="ph_number" name="ph_number" value="<?php echo htmlspecialchars($phNumberValue); ?>"><br>
+            <input type="tel" id="ph_number" name="ph_number" value="<?php echo isset($_SESSION['ph_number']) ? htmlspecialchars($_SESSION['ph_number']) : ''; ?>"><br>
             <?php if (isset($errors['phone'])): ?>
                 <span class="error"><?php echo $errors['phone']; ?></span>
             <?php endif; ?>
@@ -68,16 +65,17 @@
 
         <div>
             <label for="dob">Date of Birth:</label><br>
-            <input type="date" id="dob" name="dob" value="<?php echo $dobValue; ?>"><br>
+            <input type="date" id="dob" name="dob" value="<?php echo isset($_SESSION['dob']) ? $_SESSION['dob'] : ''; ?>"><br>
         </div>
 
         <div>
-            <label for="bio">Biography:</label><br>
-            <textarea id="bio" name="bio"><?php echo htmlspecialchars($bioValue); ?></textarea><br>
+            <label for="bio">Biography (Max 50 characters):</label><br>
+            <textarea id="bio" name="bio" maxlength="50"><?php echo isset($_SESSION['bio']) ? htmlspecialchars($_SESSION['bio']) : ''; ?></textarea><br>
             <?php if (isset($errors['bio'])): ?>
                 <span class="error"><?php echo $errors['bio']; ?></span>
             <?php endif; ?>
         </div>
+
 
         <input type="submit" value="Submit">
     </form>
