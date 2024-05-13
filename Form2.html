@@ -29,7 +29,7 @@
     <form action="process_form.php" method="POST">
         <div>
             <label for="fname">First Name:</label><br>
-            <input type="text" id="fname" name="fname" value="<?php echo isset($_SESSION['fname']) && empty($errors['fname']) ? $_SESSION['fname'] : ''; ?>"><br>
+            <input type="text" id="fname" name="fname" value="<?php echo isset($_SESSION['fname']) && empty($errors['fname']) ? htmlspecialchars($_SESSION['fname']) : ''; ?>"><br>
             <?php if (isset($errors['fname'])): ?>
                 <span class="error"><?php echo $errors['fname']; ?></span>
             <?php endif; ?>
@@ -37,7 +37,7 @@
 
         <div>
             <label for="lname">Last Name:</label><br>
-            <input type="text" id="lname" name="lname" value="<?php echo isset($_SESSION['lname']) && empty($errors['lname']) ? $_SESSION['lname'] : ''; ?>"><br>
+            <input type="text" id="lname" name="lname" value="<?php echo isset($_SESSION['lname']) && empty($errors['lname']) ? htmlspecialchars($_SESSION['lname']) : ''; ?>"><br>
             <?php if (isset($errors['lname'])): ?>
                 <span class="error"><?php echo $errors['lname']; ?></span>
             <?php endif; ?>
@@ -45,7 +45,7 @@
 
         <div>
             <label for="email">Email Address:</label><br>
-            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email']) && empty($errors['email']) ? $_SESSION['email'] : ''; ?>"><br>
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email']) && empty($errors['email']) ? htmlspecialchars($_SESSION['email']) : ''; ?>"><br>
             <?php if (isset($errors['email'])): ?>
                 <span class="error"><?php echo $errors['email']; ?></span>
             <?php endif; ?>
@@ -53,7 +53,7 @@
 
         <div>
             <label for="ph_number">Phone Number:</label><br>
-            <input type="tel" id="ph_number" name="ph_number" value="<?php echo isset($_SESSION['ph_number']) && empty($errors['phone']) ? $_SESSION['ph_number'] : ''; ?>"><br>
+            <input type="tel" id="ph_number" name="ph_number" value="<?php echo isset($_SESSION['ph_number']) && empty($errors['phone']) ? htmlspecialchars($_SESSION['ph_number']) : ''; ?>"><br>
             <?php if (isset($errors['phone'])): ?>
                 <span class="error"><?php echo $errors['phone']; ?></span>
             <?php endif; ?>
@@ -66,7 +66,7 @@
 
         <div>
             <label for="bio">Biography:</label><br>
-            <textarea id="bio" name="bio"><?php echo isset($_SESSION['bio']) ? $_SESSION['bio'] : ''; ?></textarea><br>
+            <textarea id="bio" name="bio"><?php echo isset($_SESSION['bio']) ? htmlspecialchars($_SESSION['bio']) : ''; ?></textarea><br>
             <?php if (isset($errors['bio'])): ?>
                 <span class="error"><?php echo $errors['bio']; ?></span>
             <?php endif; ?>
