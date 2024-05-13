@@ -17,6 +17,13 @@
 
     <?php
     session_start();
+    $fnameValue = isset($_SESSION['fname']) ? $_SESSION['fname'] : '';
+    $lnameValue = isset($_SESSION['lname']) ? $_SESSION['lname'] : '';
+    $emailValue = isset($_SESSION['email']) ? $_SESSION['email'] : '';
+    $phNumberValue = isset($_SESSION['ph_number']) ? $_SESSION['ph_number'] : '';
+    $dobValue = isset($_SESSION['dob']) ? $_SESSION['dob'] : '';
+    $bioValue = isset($_SESSION['bio']) ? $_SESSION['bio'] : '';
+    
     if (isset($_SESSION['errors'])) {
         $errors = $_SESSION['errors'];
         foreach ($errors as $error) {
@@ -29,7 +36,7 @@
     <form action="process_form.php" method="POST">
         <div>
             <label for="fname">First Name:</label><br>
-            <input type="text" id="fname" name="fname" value="<?php echo isset($_SESSION['fname']) && empty($errors['fname']) ? htmlspecialchars($_SESSION['fname']) : ''; ?>"><br>
+            <input type="text" id="fname" name="fname" value="<?php echo htmlspecialchars($fnameValue); ?>"><br>
             <?php if (isset($errors['fname'])): ?>
                 <span class="error"><?php echo $errors['fname']; ?></span>
             <?php endif; ?>
@@ -37,7 +44,7 @@
 
         <div>
             <label for="lname">Last Name:</label><br>
-            <input type="text" id="lname" name="lname" value="<?php echo isset($_SESSION['lname']) && empty($errors['lname']) ? htmlspecialchars($_SESSION['lname']) : ''; ?>"><br>
+            <input type="text" id="lname" name="lname" value="<?php echo htmlspecialchars($lnameValue); ?>"><br>
             <?php if (isset($errors['lname'])): ?>
                 <span class="error"><?php echo $errors['lname']; ?></span>
             <?php endif; ?>
@@ -45,7 +52,7 @@
 
         <div>
             <label for="email">Email Address:</label><br>
-            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email']) && empty($errors['email']) ? htmlspecialchars($_SESSION['email']) : ''; ?>"><br>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($emailValue); ?>"><br>
             <?php if (isset($errors['email'])): ?>
                 <span class="error"><?php echo $errors['email']; ?></span>
             <?php endif; ?>
@@ -53,7 +60,7 @@
 
         <div>
             <label for="ph_number">Phone Number:</label><br>
-            <input type="tel" id="ph_number" name="ph_number" value="<?php echo isset($_SESSION['ph_number']) && empty($errors['phone']) ? htmlspecialchars($_SESSION['ph_number']) : ''; ?>"><br>
+            <input type="tel" id="ph_number" name="ph_number" value="<?php echo htmlspecialchars($phNumberValue); ?>"><br>
             <?php if (isset($errors['phone'])): ?>
                 <span class="error"><?php echo $errors['phone']; ?></span>
             <?php endif; ?>
@@ -61,12 +68,12 @@
 
         <div>
             <label for="dob">Date of Birth:</label><br>
-            <input type="date" id="dob" name="dob" value="<?php echo isset($_SESSION['dob']) ? $_SESSION['dob'] : ''; ?>"><br>
+            <input type="date" id="dob" name="dob" value="<?php echo $dobValue; ?>"><br>
         </div>
 
         <div>
             <label for="bio">Biography:</label><br>
-            <textarea id="bio" name="bio"><?php echo isset($_SESSION['bio']) ? htmlspecialchars($_SESSION['bio']) : ''; ?></textarea><br>
+            <textarea id="bio" name="bio"><?php echo htmlspecialchars($bioValue); ?></textarea><br>
             <?php if (isset($errors['bio'])): ?>
                 <span class="error"><?php echo $errors['bio']; ?></span>
             <?php endif; ?>
@@ -76,6 +83,3 @@
     </form>
 </body>
 </html>
-
-
-        
