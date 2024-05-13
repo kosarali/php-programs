@@ -4,80 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <style>
-        .error {
-            color: red;
-            font-size: 0.8em;
-            margin-top: 5px;
-        }
-    </style>
 </head>
 <body>
     <h1>Registration Form</h1>
 
     <?php
     session_start();
-    if (isset($_SESSION['success'])) {
-        echo "<p style='color: green;'>".$_SESSION['success']."</p>";
-        unset($_SESSION['success']); // Clear success message after displaying
+    // Function to decode URL-encoded JSON string
+    function decode_errors($encoded_errors) {
+        return json_decode(urldecode($encoded_errors), true);
     }
-    if (isset($_SESSION['errors'])) {
-        $errors = $_SESSION['errors'];
+
+    // Check for success message
+    if (isset($_GET['success'])) {
+        echo "<p style='color: green;'>" . $_GET['success'] . "</p>";
+    }
+
+    // Check for error message
+    if (isset($_GET['error'])) {
+        $errors = decode_errors($_GET['error']);
         foreach ($errors as $error) {
-            echo "<p class='error'>$error</p>";
+            echo "<p style='color: red;'>$error</p>";
         }
-        unset($_SESSION['errors']); // Clear errors after displaying
     }
     ?>
 
     <form action="process_form.php" method="POST">
         <div>
             <label for="fname">First Name:</label><br>
-            <input type="text" id="fname" name="fname" value="<?php echo isset($_SESSION['fname']) ? htmlspecialchars($_SESSION['fname']) : ''; ?>"><br>
-            <?php if (isset($errors['name'])): ?>
-                <span class="error"><?php echo $errors['name']; ?></span>
+            <input type="text" id="fname" name="fname" value="<?php echo isset($_SESSION['form_data']['fname']) ? htmlspecialchars($_SESSION['form_data']['fname']) : ''; ?>"><br>
+            <?php if (isset($_SESSION['errors']['fname'])): ?>
+                <p style="color: red;"><?php echo $_SESSION['errors']['fname']; ?></p>
             <?php endif; ?>
         </div>
 
         <div>
             <label for="lname">Last Name:</label><br>
-            <input type="text" id="lname" name="lname" value="<?php echo isset($_SESSION['lname']) ? htmlspecialchars($_SESSION['lname']) : ''; ?>"><br>
-            <?php if (isset($errors['name'])): ?>
-                <span class="error"><?php echo $errors['name']; ?></span>
+            <input type="text" id="lname" name="lname" value="<?php echo isset($_SESSION['form_data']['lname']) ? htmlspecialchars($_SESSION['form_data']['lname']) : ''; ?>"><br>
+            <?php if (isset($_SESSION['errors']['lname'])): ?>
+                <p style="color: red;"><?php echo $_SESSION['errors']['lname']; ?></p>
             <?php endif; ?>
         </div>
 
         <div>
             <label for="email">Email Address:</label><br>
-            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : ''; ?>"><br>
-            <?php if (isset($errors['email'])): ?>
-                <span class="error"><?php echo $errors['email']; ?></span>
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['form_data']['email']) ? htmlspecialchars($_SESSION['form_data']['email']) : ''; ?>"><br>
+            <?php if (isset($_SESSION['errors']['email'])): ?>
+                <p style="color: red;"><?php echo $_SESSION['errors']['email']; ?></p>
             <?php endif; ?>
         </div>
 
         <div>
             <label for="ph_number">Phone Number:</label><br>
-            <input type="tel" id="ph_number" name="ph_number" value="<?php echo isset($_SESSION['ph_number']) ? htmlspecialchars($_SESSION['ph_number']) : ''; ?>"><br>
-            <?php if (isset($errors['phone'])): ?>
-                <span class="error"><?php echo $errors['phone']; ?></span>
+            <input type="tel" id="ph_number" name="ph_number" value="<?php echo isset($_SESSION['form_data']['ph_number']) ? htmlspecialchars($_SESSION['form_data']['ph_number']) : ''; ?>"><br>
+            <?php if (isset($_SESSION['errors']['phone'])): ?>
+                <p style="color: red;"><?php echo $_SESSION['errors']['phone']; ?></p>
             <?php endif; ?>
         </div>
 
         <div>
             <label for="dob">Date of Birth:</label><br>
-            <input type="date" id="dob" name="dob" value="<?php echo isset($_SESSION['dob']) ? $_SESSION['dob'] : ''; ?>"><br>
+            <input type="date" id="dob" name="dob" value="<?php echo isset($_SESSION['form_data']['dob']) ? $_SESSION['form_data']['dob'] : ''; ?>"><br>
         </div>
 
         <div>
-            <label for="bio">Biography (Max 50 characters):</label><br>
-            <textarea id="bio" name="bio" maxlength="50"><?php echo isset($_SESSION['bio']) ? htmlspecialchars($_SESSION['bio']) : ''; ?></textarea><br>
-            <?php if (isset($errors['bio'])): ?>
-                <span class="error"><?php echo $errors['bio']; ?></span>
+            <label for="bio">Biography:</label><br>
+            <textarea id="bio" name="bio"><?php echo isset($_SESSION['form_data']['bio']) ? htmlspecialchars($_SESSION['form_data']['bio']) : ''; ?></textarea><br>
+            <?php if (isset($_SESSION['errors']['bio'])): ?>
+                <p style="color: red;"><?php echo $_SESSION['errors']['bio']; ?></p>
             <?php endif; ?>
         </div>
 
-
         <input type="submit" value="Submit">
     </form>
+
+    <?php
+    // Clear form data and errors from session
+    unset($_SESSION['form_data']);
+    unset($_SESSION['errors']);
+    ?>
 </body>
 </html>
