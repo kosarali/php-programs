@@ -14,12 +14,9 @@ function sanitize_input($data) {
     return $data;
 }
 
-// Initialize errors array
-$errors = [];
-
 // Validate form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and validate inputs
+    // Sanitize inputs
     $fname = sanitize_input($_POST["fname"]);
     $lname = sanitize_input($_POST["lname"]);
     $email = sanitize_input($_POST["email"]);
@@ -27,9 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dob = sanitize_input($_POST["dob"]);
     $bio = sanitize_input($_POST["bio"]);
 
+    // Initialize errors array
+    $errors = [];
+
     // Validate first name and last name (no white space allowed)
     if (preg_match("/^\s+/", $fname) || preg_match("/^\s+/", $lname)) {
-        $errors['name'] = "First name and last name should not contain leading white space.";
+        $errors['fname'] = "First name and last name should not contain leading white space.";
     }
 
     // Validate email format
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate phone number format
     if (!validatePhoneNumber($ph_number)) {
-        $errors['phone'] = "Phone number should be maximum 12 digits, starting with '+' if international.";
+        $errors['ph_number'] = "Phone number should be maximum 12 digits, starting with '+' if international.";
     }
 
     // Validate biography length
@@ -67,16 +67,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: form.html");
         exit();
     } else {
-        // Store form data in session to repopulate fields
-        $_SESSION['fname'] = $fname;
-        $_SESSION['lname'] = $lname;
-        $_SESSION['email'] = $email;
-        $_SESSION['ph_number'] = $ph_number;
-        $_SESSION['dob'] = $dob;
-        $_SESSION['bio'] = $bio;
+        // Store form data and errors in session to repopulate fields and display errors
+        $_SESSION['form_data'] = [
+            'fname' => $fname,
+            'lname' => $lname,
+            'email' => $email,
+            'ph_number' => $ph_number,
+            'dob' => $dob,
+            'bio' => $bio
+        ];
         $_SESSION['errors'] = $errors;
 
-        // Redirect back to form without reloading
+        // Redirect back to form with error message
         header("Location: form.html");
         exit();
     }
